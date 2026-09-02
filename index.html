@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bike Trip Tracker</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, Roboto, Arial, sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    padding: 16px;
+  }
+  h1 { font-size: 20px; margin: 0 0 16px; }
+  .card {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat { text-align: center; }
+  .stat .val { font-size: 22px; font-weight: 700; }
+  .stat .lbl { font-size: 12px; color: #94a3b8; }
+  #status { font-size: 14px; color: #94a3b8; margin-bottom: 10px; }
+  .btns { display: flex; gap: 10px; }
+  button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  #startBtn { background: #22c55e; color: #0f172a; }
+  #stopBtn { background: #ef4444; color: #fff; }
+  button:disabled { opacity: 0.4; }
+  #trips { list-style: none; padding: 0; margin: 0; }
+  #trips li {
+    border-top: 1px solid #334155;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+  #trips li:first-child { border-top: none; }
+  #trips a { color: #60a5fa; }
+  .muted { color: #94a3b8; font-size: 12px; }
+</style>
+</head>
+<body>
+  <h1>🚲 Bike Trip Tracker</h1>
+
+  <div class="card">
+    <div id="status">Tap Start, or ride above 5 km/h to auto-start.</div>
+    <div class="stats">
+      <div class="stat"><div class="val" id="speed">0.0</div><div class="lbl">km/h</div></div>
+      <div class="stat"><div class="val" id="distance">0.00</div><div class="lbl">km this trip</div></div>
+      <div class="stat"><div class="val" id="duration">00:00</div><div class="lbl">duration</div></div>
+      <div class="stat"><div class="val" id="accuracy">--</div><div class="lbl">GPS accuracy (m)</div></div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button id="startBtn">START</button>
+    <button id="stopBtn" disabled>STOP</button>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="muted" style="margin-bottom:8px;">Today's trips</div>
+    <ul id="trips"><li class="muted">No trips yet.</li></ul>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
